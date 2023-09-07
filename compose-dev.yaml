@@ -1,12 +1,15 @@
 services:
   app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     entrypoint:
-    - sleep
-    - infinity
-    image: docker/dev-environments-default:stable-1
+      - sleep
+      - infinity
     init: true
     volumes:
-    - type: bind
-      source: /var/run/docker.sock
-      target: /var/run/docker.sock
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+
 
