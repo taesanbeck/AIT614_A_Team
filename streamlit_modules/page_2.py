@@ -3,7 +3,7 @@ import streamlit as st
 from PIL import Image
 
 def show_page():
-    st.title('User Application')
+    st.title('Map')
 
     st.header('Upload an image:')
     uploaded_file = st.file_uploader("Choose an image file", type=["jpg", "jpeg", "png"])
