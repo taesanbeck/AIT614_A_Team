@@ -9,8 +9,9 @@ import streamlit as st
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 def standalone_yolo(image, confidence, save_img, image_name):
-    model=YOLO('yolov8x.pt') # will download the model if it isn't already there
+    model=YOLO('yolov8n_du_map22.pt') # will download the model if it isn't already there
     detection = model.predict(image, conf=confidence)
+    st.write("number of detections",len(detection))
     output = [{'class': box.cls.item(), 'class_name': detection[0].names[box.cls.item()],
                'xyxy': box.xyxy.tolist()[0], 'conf': box.conf.item()} for box in detection[0].boxes]
     i = 0
@@ -24,15 +25,21 @@ def standalone_yolo(image, confidence, save_img, image_name):
         if not os.path.exists(os.path.join('objects', 'saved_img')):
             os.mkdir(os.path.join('objects', 'saved_img'))
         raw_output = detection[0].plot(pil=True)
-        cv2.imwrite(os.path.join('objects', 'saved_img', 'predict_'+image_name), raw_output)
-        result_image = Image.open(os.path.join('objects', 'saved_img', 'predict_'+image_name))
+        output_filename = os.path.join('objects', 'saved_img', 'predict_'+os.path.splitext(image_name)[0]+'.png')
+        cv2.imwrite(output_filename, raw_output)
+        result_image = Image.open(output_filename)
 
     for object in output:
         centroid = find_bbox_centroid(object['xyxy'][0], object['xyxy'][1], object['xyxy'][2], object['xyxy'][3])
         location = find_quadrant(image, centroid[0], centroid[1])
         object.update({'location': location, 'centroid': (centroid[0], centroid[1])})
-
-    return output, result_image
+    
+    # Check if no output
+    if not output:
+            return ["no output returned"], result_image
+    else:
+        return output, result_image
+        
 
 def output_class_list(olist):
     # get only the class predictions as human readable names
@@ -51,4 +58,4 @@ def run_yolo8(image_input, image_name, bounding_box_option, confidence_level):
 
     st.image(image_output, caption='Uploaded Image', use_column_width=True)  # Display the uploaded image
     
-    return results  # Return labels as a list and the raw results as a list of dicts
+    return results, image_output   # Return labels as a list and the raw results as a list of dicts
