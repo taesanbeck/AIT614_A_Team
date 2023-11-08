@@ -11,7 +11,6 @@ def show_sidebar(page_options):
 
     # Add a selectbox for CV model
     selected_cv_model = None
-    selected_nlp_model = None
     if page == "Predict and Database":
         selected_cv_model = st.sidebar.selectbox('Select CV Model', ['YOLOV8', 'YOLOV8_xView'])
         
@@ -19,6 +18,6 @@ def show_sidebar(page_options):
     if page == "Map":
         st.sidebar.button('Run Application')
 
-    return page, selected_cv_model, selected_nlp_model
+    return page, selected_cv_model
 
     

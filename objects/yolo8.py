@@ -11,7 +11,6 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 def standalone_yolo(image, confidence, save_img, image_name):
     model=YOLO('yolov8n_du_map22.pt') # will download the model if it isn't already there
     detection = model.predict(image, conf=confidence)
-    st.write("number of detections",len(detection))
     output = [{'class': box.cls.item(), 'class_name': detection[0].names[box.cls.item()],
                'xyxy': box.xyxy.tolist()[0], 'conf': box.conf.item()} for box in detection[0].boxes]
     i = 0
@@ -25,7 +24,7 @@ def standalone_yolo(image, confidence, save_img, image_name):
         if not os.path.exists(os.path.join('objects', 'saved_img')):
             os.mkdir(os.path.join('objects', 'saved_img'))
         raw_output = detection[0].plot(pil=True)
-        output_filename = os.path.join('objects', 'saved_img', 'predict_'+os.path.splitext(image_name)[0]+'.png')
+        output_filename = os.path.join('objects', 'saved_img', ''+os.path.splitext(image_name)[0]+'.png')
         cv2.imwrite(output_filename, raw_output)
         result_image = Image.open(output_filename)
 

@@ -12,7 +12,7 @@ def handle_uploaded_image(uploaded_file):
     image_name = uploaded_file.name
   
     # Define paths for saving files
-    saved_dir_path = "../objects/saved_img/"
+    saved_dir_path = "AIT614_A_TEAM/objects/saved_img/"
     saved_file_path = os.path.join(saved_dir_path, image_name)
     
     # Ensure the directory exists
@@ -27,6 +27,9 @@ def handle_uploaded_image(uploaded_file):
 
     # Convert the NITF to PNG using the provided Jupyter code
     png_file = nitf_to_png(nitf_path, image_name)
+    
+    # Get the absolute path of the png_file
+    png_file = os.path.abspath(png_file)
     
     # Extract NITF metadata
     extracted_nitf_metadata = extract_nitf_metadata(nitf_path)

@@ -16,11 +16,11 @@ def main():
     default.default_page_config()
 
     # Show sidebar and get current page
-    page, selected_cv_model, selected_nlp_model = sidebar.show_sidebar(['Predict and Database', 'Map', 'About'])
+    page, selected_cv_model = sidebar.show_sidebar(['Predict and Database', 'Map', 'About'])
 
     # Display the selected page
     if page == "Predict and Database":
-        page_1.show_page(selected_cv_model, selected_nlp_model)  # or selected_nlp_model, depending on which one you need
+        page_1.show_page(selected_cv_model)  
     elif page == "Map":
         # need to add model selection for the Map page as well
         page_2.show_page()
