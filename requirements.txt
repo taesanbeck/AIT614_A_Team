@@ -3,6 +3,7 @@ geopy==2.4.0
 numpy==1.23.3
 opencv_python==4.8.0.76
 pandas==2.0.3
+Pillow==9.5.0
 Pillow==10.1.0
 pymongo==4.6.0
 python-dotenv==1.0.0
