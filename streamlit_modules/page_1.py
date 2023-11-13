@@ -49,16 +49,12 @@ def show_page(selected_cv_model):
         if png_file is not None:
             st.markdown("<h1 style='text-align: left; color: green;font-size: 20px;'>NTF image successfully converted to PNG!!</h1>", unsafe_allow_html=True)
 
-    with st.form(key='model_param_selection_form'):
-        st.header('Confidence Level:')
-        confidence_level = st.slider('Adjust the confidence level', min_value=0.0, max_value=1.0, value=0.1)
 
-        st.header('Bounding Boxes:')
-        bounding_box_option = st.radio('Would you like bounding boxes displayed?', ('Yes', 'No'))
-        
-        
-        submit_button = st.form_submit_button('Run Models')
-        
+    st.header('Confidence Level:')
+    confidence_level = st.slider('Adjust the confidence level', min_value=0.0, max_value=1.0, value=0.1)
+
+    st.header('Bounding Boxes:')
+    bounding_box_option = st.radio('Would you like bounding boxes displayed?', ('Yes', 'No'))
 
 
     import os
@@ -71,9 +67,8 @@ def show_page(selected_cv_model):
     saved_images_directory = os.path.join(current_working_directory, 'objects', 'saved_img')
 
     # Relative path to Streamlit app
-    if png_file is not None and submit_button:
-        
-        # 'png_file' is the name of the file and not the full path
+    if png_file is not None and st.button('Run Models'):
+        # Assuming 'png_file' is the name of the file and not the full path
         full_file_path = os.path.join(saved_images_directory, png_file)
 
         with open(full_file_path, 'rb') as file:
