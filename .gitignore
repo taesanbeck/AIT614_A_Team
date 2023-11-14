@@ -1,5 +1,5 @@
 _pychache_
 *.pt
 .env
-._pychache_
-.ntf
+*._pychache_
+*.ntf
